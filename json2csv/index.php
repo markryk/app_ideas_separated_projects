@@ -1,4 +1,4 @@
-<?php include_once 'csv_json_convert.php'; ?>
+<?php include_once 'json_csv_convert.php'; ?>
 
 <!DOCTYPE html>
 <html>
@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="style.css">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title> Conversor CSV-JSON </title>
+	<title> Conversor JSON-CSV </title>
 </head>
 <body>
 
@@ -21,8 +21,8 @@
 					  </li>
 					</ul>
 
-                    <h2> Conversor CSV p/ JSON </h2>
-                    <p class="lead"> Entre com um CSV e ele será convertido para JSON </p>
+                    <h2> Conversor JSON p/ CSV </h2>
+                    <p class="lead"> Entre com um JSON e ele será convertido para CSV </p>
                     <hr class="my-4">
 
 					<div class="row">
@@ -32,8 +32,8 @@
 								<!--<input type="hidden" value="convert" name="action">-->
 
 								<div class="">
-									<label for="textarea"> Entre com o CSV aqui </label>
-									<textarea class="form-control mb-3" name="csv_text_area" id="textarea" rows="10" required></textarea>
+									<label for="textarea"> Entre com o JSON aqui </label>
+									<textarea class="form-control mb-3" name="json_text_area" id="textarea" rows="10" required></textarea>
 									
 									<input class="btn btn-primary btn-lg" type="submit" value="Converter">
 								</div>
@@ -42,11 +42,10 @@
 
 						<div class="col">
 							<label for="textarea"> Resultado </label>
-							<textarea class="form-control" name="csv_text_area" id="textarea" rows="10">
+							<textarea class="form-control" name="json_text_area" id="textarea" rows="10">
 								<?php
-									if (isset($_POST['csv_text_area']) && !empty($_POST['csv_text_area'])) {
-										if (!is_csv($_POST['csv_text_area'])) echo "Texto não é CSV!";
-										else csv_json_conversor($_POST['csv_text_area']);
+									if (isset($_POST['json_text_area']) && !empty($_POST['json_text_area'])) {
+										json_csv_conversor($_POST['json_text_area']);
 									}									
 								?>
 							</textarea>
