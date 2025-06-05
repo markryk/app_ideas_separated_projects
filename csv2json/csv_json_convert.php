@@ -77,10 +77,42 @@
         //remove os \r do json resultante
         $json_text = str_replace("\\r", "", $json_text);
 
+        //remove os \t do json resultante (se houver)
+        $json_text = str_replace("\\t", "", $json_text);
+
         //remove a última vírgula e a última quebra de linha
         $json_text = substr($json_text, 0, -2);
         
         $json_text .= "]";
         echo $json_text;
+        //$conteudo = str_replace("\r\n", "", $json_text);
+        //echo $conteudo;
+    }
+
+    function ler_arquivo_csv() {
+        $nomeTemporario = $_FILES['csv_file']['tmp_name'];
+        $nomeOriginal = $_FILES['csv_file']['name'];
+        $extensao = pathinfo($nomeOriginal, PATHINFO_EXTENSION);
+
+        if ($extensao != "csv") {
+            echo "Arquivo não é CSV!";
+        } else {
+
+            // Lê o conteúdo do arquivo
+            $conteudo = file_get_contents($nomeTemporario);
+            echo $conteudo;
+        }
+    }
+
+    function save_json($json_text) {
+        // Gera o arquivo CSV
+        $csvFile = fopen("json_file.json", "w");
+
+        $conteudo = $json_text;
+        file_put_contents('json_file.json', $conteudo);
+
+        fclose($csvFile);
+
+        echo "<p> Arquivo gerado com sucesso! <a href='json_file.json' download> Clique aqui para baixar </a></p>";
     }
 ?>

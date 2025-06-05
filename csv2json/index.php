@@ -26,30 +26,97 @@
                     <hr class="my-4">
 
 					<div class="row">
-						<div class="col">
-							<form action="#" method="post">
-							<!--<form action="#" method="POST">-->
-								<!--<input type="hidden" value="convert" name="action">-->
-
-								<div class="">
-									<label for="textarea"> Entre com o CSV aqui </label>
-									<textarea class="form-control mb-3" name="csv_text_area" id="textarea" rows="10" required></textarea>
-									
-									<input class="btn btn-primary btn-lg" type="submit" value="Converter">
+						<!-- Área esquerda com 3 colunas -->
+						<div class="col-6">
+							<div class="row">
+								<div class="col p-3">
+									<form action="#" method="post">
+										<div class="card">
+											<label for="textarea" class="card-header"> Entre com o CSV aqui </label>
+											<div class="card-body">
+												<textarea class="form-control mb-3" name="csv_text_area" id="textarea" rows="10" required></textarea>
+												<input class="btn btn-primary btn-lg" type="submit" value="Converter p/ JSON">
+											</div>
+										</div>
+									</form>
 								</div>
-							</form>
+							</div>
+							<hr>
+
+							<div class="p-2" style="background-color: gray;">
+								<div class="row">
+									<div class="col p-3">
+										<form action="#" method="post" enctype="multipart/form-data">
+											<div class="card">
+												<label for="csvfile" class="card-header"> Ou faça upload de um arquivo CSV </label>
+												<div class="card-body">
+													<input type="file" class="form-control" name="csv_file" id="csvfile">
+													<br>
+													<input class="btn btn-success btn-lg" type="submit" value="Abrir CSV">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col p-3">
+										<form action="#" method="post">
+											<div class="card">
+												<label for="textarea" class="card-header"> Resultado do upload </label>
+
+												<div class="card-body">
+													<textarea class="form-control mb-3" name="csv_result" id="textarea" rows="10">
+														<?php
+															if (isset($_FILES['csv_file'])) {
+																ler_arquivo_csv();
+															}
+														?>
+													</textarea>
+													<input class="btn btn-success btn-lg" type="submit" value="Converter p/ JSON">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
 						</div>
 
-						<div class="col">
-							<label for="textarea"> Resultado </label>
-							<textarea class="form-control" name="csv_text_area" id="textarea" rows="10">
-								<?php
-									if (isset($_POST['csv_text_area']) && !empty($_POST['csv_text_area'])) {
-										if (!is_csv($_POST['csv_text_area'])) echo "Texto não é CSV!";
-										else csv_json_conversor($_POST['csv_text_area']);
-									}									
-								?>
-							</textarea>
+						<!-- Área direita com 1 coluna -->
+						<div class="col-6 p-3">
+							<div class="card">
+								<label for="textarea" class="card-header"> JSON resultante </label>
+
+								<form action="#" method="post">
+									<div class="card-body">
+										<textarea class="form-control mb-3" name="json_result" id="jsonresult" rows="40" readonly>
+											<?php
+												if (isset($_POST['csv_text_area']) && !empty($_POST['csv_text_area'])) {
+													if (!is_csv($_POST['csv_text_area'])) echo "Texto não é CSV!";
+													else csv_json_conversor($_POST['csv_text_area']);
+												}
+
+												if (isset($_POST['csv_result']) && !empty($_POST['csv_result'])) {
+													if (!is_csv($_POST['csv_result'])) echo "Texto não é CSV!";
+													else csv_json_conversor($_POST['csv_result']);
+												}
+											?>
+										</textarea>
+										<input type="submit" class="btn btn-dark btn-lg" value="Salvar">
+										<!--<a class="btn btn-dark" href="save.php" role="button"> Salvar </a>-->
+
+										<!--<form action="">-->
+										<div>
+											<?php
+												if (isset($_POST['json_result']) && !empty($_POST['json_result'])) {
+													save_json($_POST['json_result']);
+												}
+											?>
+										</div>
+										<!--</form>-->
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 
