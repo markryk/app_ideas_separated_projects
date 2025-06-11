@@ -17,7 +17,7 @@
 				<div class="jumbotron" style="background-color: #54E80C;">
 					<ul class="nav nav-pills justify-content-end">
 					  <li class="nav-item">
-					    <a class="nav-link btn btn-outline-dark" href="../index.php"> Início </a>
+					    <a class="nav-link btn btn-outline-dark" href="../"> Início </a>
 					  </li>
 					</ul>
 
