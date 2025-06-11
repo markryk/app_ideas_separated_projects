@@ -1,60 +1,50 @@
 <?php
+    function is_valid_json($json_txt) {
+        $csv = json_decode($json_txt, true);
+        if (is_null($csv)) return false; //echo "Não é um JSON válido!";
+        return true;
+    }
+
     function json_csv_conversor($json_text) {
         $csv = json_decode($json_text, true);
-        /*echo count($csv);
-        echo "\n";*/
 
         //Captura os indexes da primeira linha (chaves) e coloca em um array
         $indexes = array();
         $csv_text = "";
         foreach ($csv[0] as $key => $value) {
             $csv_text .= $key.",";
-            //echo $key.",";
             array_push($indexes, $key);
         }
         $csv_text = substr($csv_text, 0, -1);
         $csv_text .= "\r";
-        //echo "\r";
-        //echo "\n";
 
+        //Captura os valores (values) do JSON e coloca no mesmo array
         $rows = array();
-        //$csv_text = "";
         for ($i=1; $i<count($csv); $i++) {
             foreach ($csv[$i] as $key => $value) {
                 $csv_text .= $value.",";
                 array_push($rows, $value);
-                //echo $row_text;
-                //$row_text = substr($row_text, 0, -1);
             }
+            //remove a última vírgula e pula uma linha ao final de cada iteração
             $csv_text = substr($csv_text, 0, -1);
             $csv_text .= "\r";
-            //echo "\r";
         }
-        echo "\n";
 
         echo $csv_text;
-        echo "\n";
+    }
 
-        //print_r($rows);
-        //echo "\n";
+    function ler_arquivo_json() {
+        $nomeTemporario = $_FILES['json_file']['tmp_name'];
+        $nomeOriginal = $_FILES['json_file']['name'];
+        $extensao = pathinfo($nomeOriginal, PATHINFO_EXTENSION);
 
-        /*for ($i=1; $i<count($csv); $i++) {
-            foreach ($csv[$i] as $key => $value) {
-                echo $key.",";
-                //echo "Igual";*/
-                /*if ($csv[$i] != $csv[0]) {
-                    echo "Diferente";
-                    break;
-                }*/
-            /*}
-            echo "\n";
-        }*/
+        if ($extensao != "json") {
+            echo "Arquivo não é JSON!";
+        } else {
 
-        //Esse trecho agrupa todos os indexes
-        /*for ($i=0; $i<count($csv); $i++) {
-            foreach ($csv[$i] as $key => $value) {
-                echo $key.",";
-            }
-        }*/
+            // Lê o conteúdo do arquivo
+            $conteudo = file_get_contents($nomeTemporario);
+            echo $conteudo;
+        }
     }
 ?>

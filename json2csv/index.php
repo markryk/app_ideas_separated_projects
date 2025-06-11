@@ -69,7 +69,7 @@
 													<textarea class="form-control mb-3" name="json_result" id="textarea" rows="10">
 														<?php
 															if (isset($_FILES['json_file'])) {
-																//ler_arquivo_csv();
+																ler_arquivo_json();
 															}
 														?>
 													</textarea>
@@ -92,18 +92,16 @@
 										<textarea class="form-control mb-3" name="csv_result" id="csvresult" rows="40" readonly>
 											<?php
 												if (isset($_POST['json_text_area']) && !empty($_POST['json_text_area'])) {
-													json_csv_conversor($_POST['json_text_area']);
-												}									
 
-												/*if (isset($_POST['json_text_area']) && !empty($_POST['json_text_area'])) {
-													if (!is_csv($_POST['json_text_area'])) echo "Texto não é JSON!";
+													if (!is_valid_json($_POST['json_text_area'])) echo "Texto não é um JSON válido!";
 													else json_csv_conversor($_POST['json_text_area']);
+
 												}
 
 												if (isset($_POST['json_result']) && !empty($_POST['json_result'])) {
-													if (!is_json($_POST['json_result'])) echo "Texto não é JSON!";
+													if (!is_valid_json($_POST['json_result'])) echo "Texto não é JSON!";
 													else json_csv_conversor($_POST['json_result']);
-												}*/
+												}
 											?>
 										</textarea>
 										<input type="submit" class="btn btn-dark btn-lg" value="Salvar">
